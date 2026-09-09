@@ -16,7 +16,7 @@ function ZoneLayer({ data, dayName, hour, selected, onSelect }) {
     layer.eachLayer(polygon => {
       const props = polygon.feature.properties
       const id = Number(props.LocationID)
-      polygon.setStyle({ fillColor: demandColor(props.predictedCount), fillOpacity: 0.76, color: id === selectionRef.current ? '#f1ac35' : '#397b70', weight: id === selectionRef.current ? 3 : 0.7 })
+      polygon.setStyle({ fillColor: demandColor(props.predictedCount), fillOpacity: 0.82, color: id === selectionRef.current ? '#f1ac35' : '#ffffff', weight: id === selectionRef.current ? 3 : 0.7 })
       const tooltip = document.createElement('div')
       const title = document.createElement('strong')
       title.textContent = props.zone || `Zone ${id}`
@@ -24,14 +24,14 @@ function ZoneLayer({ data, dayName, hour, selected, onSelect }) {
       polygon.bindTooltip(tooltip, { sticky: true })
       polygon.on('click', () => onSelect(id))
       polygon.on('mouseover', () => polygon.setStyle({ weight: 2, fillOpacity: 0.95 }))
-      polygon.on('mouseout', () => polygon.setStyle({ weight: id === selectionRef.current ? 3 : 0.7, fillOpacity: 0.76 }))
+      polygon.on('mouseout', () => polygon.setStyle({ weight: id === selectionRef.current ? 3 : 0.7, fillOpacity: 0.82 }))
       if (id === selectionRef.current) polygon.bringToFront()
     })
   }, [data, dayName, hour, onSelect, map])
   useEffect(() => {
     layerRef.current.eachLayer(polygon => {
       const active = Number(polygon.feature.properties.LocationID) === selected
-      polygon.setStyle({ color: active ? '#f1ac35' : '#397b70', weight: active ? 3 : 0.7 })
+      polygon.setStyle({ color: active ? '#f1ac35' : '#ffffff', weight: active ? 3 : 0.7 })
       if (active) polygon.bringToFront()
     })
   }, [selected, data])
@@ -62,6 +62,6 @@ export default function DemandMap({ data, dayName, hour, selected, onSelect }) {
       <ZoneLayer data={data} dayName={dayName} hour={hour} selected={selected} onSelect={onSelect} />
     </MapContainer>{tileError && <div className="tile-notice">Basemap tiles unavailable. Taxi-zone polygons remain interactive.</div>}
     {feature && <div className="selection-card"><button aria-label="Clear selected zone" onClick={() => onSelect(null)}>×</button><span className="eyebrow">SELECTED ZONE · {selected}</span><h3>{feature.properties.zone || `Zone ${selected}`}</h3><strong>{formatCount(feature.properties.predictedCount)} <small>predicted pickups</small></strong><p>{dayName} · {hourLabel(hour)} NYC time</p></div>}</div>
-    <div className="legend"><span>Predicted pickups / hour</span><div>{LEVELS.map(level => <span key={level.label}><i style={{ background: level.color }} /><span>{level.label}<small>{level.range}</small></span></span>)}<span><i style={{ background: '#d5dae0' }} /><span>No data</span></span></div></div>
+    <div className="legend"><span>Predicted pickups / hour</span><div>{LEVELS.map(level => <span key={level.range}><i style={{ background: level.color }} /><span>{level.range}</span></span>)}<span><i style={{ background: '#d5dae0' }} /><span>No data</span></span></div></div>
   </section>
 }

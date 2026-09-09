@@ -12,7 +12,7 @@ test('real API polygons, tooltips, selection, time changes and mobile layout', a
   const polygons = page.locator('.leaflet-overlay-pane path')
   await expect(polygons).toHaveCount(263)
   await expect(page.getByRole('heading', { name: 'Ride-Hailing Demand Predictor' })).toBeVisible()
-  await expect(page.locator('.legend')).toContainText('150+')
+  await expect(page.locator('.legend')).toContainText('>300')
   const before = await page.locator('.recommendation').allTextContents()
   const expected = await (await request.get('http://127.0.0.1:8000/api/recommend?day=Mon&hour=18&top=5')).json()
   await expect(page.locator('.recommendation').first()).toContainText(expected.recommendations[0].zoneName)

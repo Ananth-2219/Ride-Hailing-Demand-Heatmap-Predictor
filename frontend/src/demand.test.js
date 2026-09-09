@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { joinDemand, demandColor } from './demand.js'
+import { joinDemand, demandColor, LEVELS } from './demand.js'
 import { getNYCTime } from './nycTime.js'
 
 test('NYC weekday and hour respect date rollover, midnight, noon, and DST', () => {
@@ -32,10 +32,18 @@ test('join uses LocationID rather than feature order and keeps geometry untouche
   assert.equal(source.features[0].properties.predictedCount, undefined)
 })
 
-test('fixed color bins include zero and distinguish missing data', () => {
-  assert.equal(demandColor(0), '#ccece4')
-  assert.equal(demandColor(10), '#77cbb7')
-  assert.equal(demandColor(50), '#299e88')
-  assert.equal(demandColor(150), '#075c51')
-  assert.equal(demandColor(null), '#d5dae0')
+test('eight fixed bins cover fractional boundaries and distinguish missing data', () => {
+  assert.equal(LEVELS.length, 8)
+  assert.equal(new Set(LEVELS.map(level => level.color)).size, 8)
+  let previous = 0
+  LEVELS.forEach(level => {
+    assert.equal(demandColor(previous + 0.001), level.color)
+    if (Number.isFinite(level.max)) assert.equal(demandColor(level.max), level.color)
+    previous = level.max
+  })
+  assert.equal(demandColor(0), LEVELS[0].color)
+  assert.equal(demandColor(250), LEVELS[6].color)
+  for (const missing of [null, undefined, NaN, Infinity, -1]) {
+    assert.equal(demandColor(missing), '#d5dae0')
+  }
 })

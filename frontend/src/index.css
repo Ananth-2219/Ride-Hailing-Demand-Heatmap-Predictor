@@ -545,3 +545,49 @@ footer { padding:9px 0; }
  .recommendation strong { line-height:20px; }
  .pickup-value { font-size:18px; line-height:24px; margin:3px 0 5px; }
 }
+/* Reference-inspired control bar and demand palette presentation. */
+:root { background:#f4f8f8; color:#143c40; }
+.card { border-color:#dce8e9; box-shadow:0 2px 9px #1b535b09; }
+.brand-icon { background:linear-gradient(145deg,#158b7e,#096155); }
+.controls { display:grid; grid-template-columns:220px minmax(220px,1fr) 300px; gap:28px; align-items:center; }
+.day-control { width:100%; }
+.hour-control { width:100%; max-width:none; padding:0 24px; border-left:1px solid #e8eeee; }
+.control-intro { text-align:center; }
+.nyc-time-pill { display:inline-block; padding:8px 12px; border-radius:24px; background:#edf6f3; color:#287568; font-size:12px; font-weight:600; }
+.control-intro p { font-size:11px; margin-top:4px; }
+select { background:#f2f7f7; border-color:transparent; font-weight:600; }
+output { padding:0 6px; border-radius:7px; background:#f3f7f7; }
+.map-heading { background:#fff; }
+.zone-badge { background:#eff7f5; border:0; color:#376e68; }
+.legend { gap:14px; }
+.legend>div { display:grid; grid-template-columns:repeat(9,auto); gap:10px; flex:1; }
+.legend>div>span { flex-direction:column; align-items:stretch; gap:5px; text-align:center; white-space:nowrap; font-size:10px; }
+.legend i { width:100%; height:8px; border-radius:3px; }
+.legend>span { font-size:11px; min-width:78px; }
+.panel-heading p { font-size:11px; line-height:16px; }
+.rank { font-weight:600; color:#698b91; }
+.pickup-value { color:#163e42; }
+.bar { height:5px; background:#f0f4f5; }
+.recommendation { border-bottom:1px solid #f1f5f5; border-radius:8px; }
+.panel-note { font-size:11px; }
+@media(min-width:1000px) {
+ .dashboard-grid { grid-template-columns:minmax(0,2.8fr) minmax(310px,1fr); height:max(450px,calc(100dvh - 268px)); }
+ .controls { padding:10px 20px; }
+ .recommendation { padding:5px 8px; }
+ .panel-heading { padding:14px 18px 8px; }
+ .panel-note { padding:6px 8px; margin:8px 16px 10px; }
+}
+@media(max-width:999px) {
+ .controls { grid-template-columns:190px minmax(180px,1fr); }
+ .control-intro { grid-column:1/-1; text-align:left; }
+ .control-intro p { display:inline; margin-left:10px; }
+ .hour-control { padding:0; border:0; }
+ .legend>div { grid-template-columns:repeat(5,1fr); }
+}
+@media(max-width:500px) {
+ .controls { grid-template-columns:1fr; gap:14px; }
+ .control-intro p { display:block; margin-left:0; }
+ .legend { align-items:center; gap:10px; }
+ .legend>div { grid-template-columns:repeat(3,1fr); gap:8px; }
+ .nyc-time-pill { padding:6px 9px; }
+}
