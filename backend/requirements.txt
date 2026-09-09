@@ -1,0 +1,8 @@
+duckdb==1.5.5
+geopandas==1.1.4
+fastapi==0.141.1
+uvicorn==0.52.4
+httpx==0.28.1
+pandas==3.0.5
+scikit-learn==1.8.0
+joblib==1.5.3

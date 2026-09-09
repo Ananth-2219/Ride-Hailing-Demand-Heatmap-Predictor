@@ -1,0 +1,58 @@
+{
+  "random_state": 42,
+  "training_rows": 35347,
+  "test_rows": 8837,
+  "target": "May 2026 average hourly pickup count for a zone/weekday/hour bucket",
+  "baseline_method": "Training-only zone/hour mean; fallback zone mean then global mean",
+  "baseline": {
+    "MAE": 5.857949907585531,
+    "RMSE": 21.70787652239623,
+    "R2": 0.8637096726039639
+  },
+  "random_forest": {
+    "MAE": 3.6023761494857904,
+    "RMSE": 13.458386476165575,
+    "R2": 0.9476138670670939
+  },
+  "prediction_summary": {
+    "min": 0.0,
+    "max": 627.920989285714,
+    "mean": 20.906437099792118
+  },
+  "deployment_rows": 44184,
+  "sanity_examples": [
+    {
+      "case": "highest historical bucket",
+      "zone_id": 79,
+      "day": "Sat",
+      "hour": 1,
+      "historical_average": 706.2,
+      "prediction": 617.8580226190475
+    },
+    {
+      "case": "lowest historical bucket",
+      "zone_id": 1,
+      "day": "Mon",
+      "hour": 0,
+      "historical_average": 0.0,
+      "prediction": 0.10256033160578124
+    },
+    {
+      "case": "weekday",
+      "zone_id": 161,
+      "day": "Mon",
+      "hour": 18,
+      "historical_average": 467.75,
+      "prediction": 423.6113880952382
+    },
+    {
+      "case": "weekend",
+      "zone_id": 161,
+      "day": "Sat",
+      "hour": 18,
+      "historical_average": 354.6,
+      "prediction": 315.0602428571428
+    }
+  ],
+  "elapsed_seconds": 24.29110000000037
+}
