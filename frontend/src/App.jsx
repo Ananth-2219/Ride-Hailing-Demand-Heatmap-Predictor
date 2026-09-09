@@ -4,10 +4,12 @@ import { DAYS, DAY_NAMES, joinDemand, formatCount } from './demand.js'
 import TimeControls from './components/TimeControls.jsx'
 import DemandMap from './components/DemandMap.jsx'
 import RecommendationPanel from './components/RecommendationPanel.jsx'
+import { getNYCTime } from './nycTime.js'
 
 export default function App() {
-  const [day, setDay] = useState('Mon')
-  const [hour, setHour] = useState(18)
+  const [initialNYCTime] = useState(() => getNYCTime())
+  const [day, setDay] = useState(initialNYCTime.day)
+  const [hour, setHour] = useState(initialNYCTime.hour)
   const [zones, setZones] = useState(null)
   const [result, setResult] = useState(null)
   const [error, setError] = useState(false)
@@ -46,7 +48,7 @@ export default function App() {
   const names = useMemo(() => new Map(zones?.features.map(f => [Number(f.properties?.LocationID), f.properties?.zone]) || []), [zones])
   const dayName = DAY_NAMES[DAYS.indexOf(day)]
   return <div className="app-shell"><header className="site-header"><div className="brand-icon" aria-hidden="true">↗</div><div><span className="eyebrow">NYC / MOBILITY INTELLIGENCE</span><h1>Ride-Hailing Demand Predictor</h1><p>AI-powered NYC taxi demand forecasting</p></div><div className="model-badge"><span />Random Forest model</div></header>
-    <main><TimeControls day={day} hour={hour} onDay={setDay} onHour={setHour} />
+    <main><TimeControls day={day} hour={hour} onDay={setDay} onHour={setHour} initialNYCTime={initialNYCTime.label} />
       <div className="section-intro"><div><span className="eyebrow">A CLEARER VIEW OF THE CITY</span><h2>Find where demand is heading.</h2></div><p>Real taxi zones. Model-based predictions.<br />A better-informed next move.</p></div>
       {error || zoneError ? <div className="state-card card" role="alert"><h2>Unable to connect to the prediction server.</h2><p>Check that the backend is running, then try again.</p><button onClick={() => { setZones(null); setRetry(n => n + 1) }}>Retry</button></div>
       : !joined ? <div className="state-card card" role="status"><span className="spinner" />Loading demand data...</div>

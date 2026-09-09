@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test'
 
+test.beforeEach(async ({ page }) => {
+  // Monday 18:30 in NYC, independent of the machine running the suite.
+  await page.clock.setFixedTime(new Date('2026-09-07T22:30:00Z'))
+})
+
 test('real API polygons, tooltips, selection, time changes and mobile layout', async ({ page, request }) => {
   const errors = []
   page.on('pageerror', error => errors.push(error.message))
