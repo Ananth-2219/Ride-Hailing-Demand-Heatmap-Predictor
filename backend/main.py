@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 import json
 import logging
 import math
+import os
 
 import joblib
 import pandas as pd
@@ -84,9 +85,17 @@ def create_app(data_dir: Path = DATA_DIR) -> FastAPI:
         yield
 
     app = FastAPI(title="Ride-Hailing Demand API", lifespan=lifespan)
+    frontend_origin = os.environ.get(
+        "FRONTEND_ORIGIN",
+        "https://ride-hailing-demand-heatmap-predictor-1.onrender.com",
+    ).strip().rstrip("/")
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+        allow_origins=[
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            frontend_origin,
+        ],
         allow_methods=["GET"],
         allow_headers=["*"],
     )
