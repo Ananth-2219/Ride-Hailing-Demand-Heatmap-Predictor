@@ -87,7 +87,7 @@ def create_app(data_dir: Path = DATA_DIR) -> FastAPI:
     app = FastAPI(title="Ride-Hailing Demand API", lifespan=lifespan)
     frontend_origin = os.environ.get(
         "FRONTEND_ORIGIN",
-        "https://ride-hailing-demand-heatmap-predictor-1.onrender.com",
+        "https://ride-hailing-demand-heatmap-predictor.onrender.com",
     ).strip().rstrip("/")
     app.add_middleware(
         CORSMiddleware,
